@@ -11,8 +11,15 @@ fn main() {
 }
 
 fn part_1((id_ranges, avail_ids): (Vec<(i64, i64)>, Vec<i64>)) -> i64 {
-    todo!();
-    let ans = 0;
+    let mut ans = 0;
+    for id in avail_ids {
+        for &(start_inclusive, end_inclusive) in &id_ranges {
+            if (start_inclusive..=end_inclusive).contains(&id) {
+                ans += 1;
+                break;
+            }
+        }
+    }
     ans
 }
 
@@ -22,15 +29,23 @@ fn get_part_1_input(filename: &str) -> (Vec<(i64, i64)>, Vec<i64>) {
 }
 
 fn parse_input(inp: &str) -> (Vec<(i64, i64)>, Vec<i64>) {
-    todo!();
-    //let mut ret = Vec::new();
-    //for (i, line) in inp.trim().split("\n").enumerate() {
-    //    ret.push(vec![]);
-    //    for dig in line.chars() {
-    //        ret[i].push(dig);
-    //    }
-    //}
-    //ret
+    let (ranges_str, ids_str) = inp.split_once("\n\n").unwrap();
+    let id_ranges = ranges_str
+        .trim()
+        .split("\n")
+        .map(|range| {
+            let (first, second) = range.split_once("-").unwrap();
+            let (first_num, second_num) = (first.parse().unwrap(), second.parse().unwrap());
+            (first_num, second_num)
+        })
+        .collect();
+    let avail_ids = ids_str
+        .trim()
+        .split("\n")
+        .map(|id_str| id_str.parse().unwrap())
+        .collect();
+    //dbg!(&id_ranges, &avail_ids);
+    (id_ranges, avail_ids)
 }
 
 #[cfg(test)]
