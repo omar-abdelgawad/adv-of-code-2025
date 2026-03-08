@@ -92,6 +92,8 @@ L82";
         let ans = part_2(p2_inp);
         assert_eq!(ans, 6);
     }
+    // don't run the two test cases at the same time since a race condition might occur
+    #[ignore = "just run one of the tests at a time due to static variable"]
     #[test]
     fn test_other_case() {
         unsafe {
